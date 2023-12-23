@@ -1,0 +1,12 @@
+PROG LOAD
+INIT
+...
+!!!!!!!!!!!!!!!!!
+SYS 4096 FREE
+STATUS LOADING
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+...
+ALBUM
+BEGIN ALBUM PARTY INITIALIZATION
+...
+!!!!!!!!!!

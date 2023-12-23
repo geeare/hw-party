@@ -1,0 +1,13 @@
+PROG TERM
+HALT
+...
+!!!!!!!!!!!!!!!!!
+CLEAR SYS
+STATUS HALT
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+...
+ALBUM
+END ALBUM PARTY 
+...
+!!!!!!!!!!!!!!!
+

@@ -1,0 +1,122 @@
+#!/usr/bin/env python3
+
+"""
+This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this
+file, You can obtain one at https://mozilla.org/MPL/2.0/.
+"""
+
+import sys, time, subprocess, os, threading
+from pathlib import Path
+import mpris
+
+ARTIST:str = 'GeeAre'
+ALBUM:str = 'Hello World!'
+PROMPT:str = '~GR: ENTER PROGRAM SPEC TO LOAD > '
+SHOW_VIS:bool = True
+VIS_TTY:int = 0
+
+Mpris = mpris.MprisClient()
+HOME_DIR = Path.home()
+ART_DIR = Path.cwd()
+
+def stop_vis():
+    subprocess.run(['killall', 'vis'], capture_output=True)
+
+def clear_screen() -> None:
+    subprocess.run(['clear'])
+
+def show_vis(tty):
+    if SHOW_VIS:
+        os.system(f'vis > /dev/pts/{tty}')
+
+with open(ART_DIR / 'ascii-cover-release.c') as ascii_file:
+    file_list = ascii_file.readlines()
+
+with open(ART_DIR / 'init-release.txt') as loading_file:
+    load_list = loading_file.readlines()
+
+with open(ART_DIR / 'halt.txt') as halt_file:
+    halt_list = halt_file.readlines()
+
+file_str = ''.join(file_list)
+load_str = ''.join(load_list)
+halt_str = ''.join(halt_list)
+
+clear_screen()
+input(PROMPT)
+time.sleep(3)
+clear_screen()
+
+# Loading
+for char in load_str:
+    time.sleep(0.01)
+    if char != '!':
+        sys.stdout.write(char)
+        sys.stdout.flush()
+
+vis = threading.Thread(target=show_vis, args=VIS_TTY)
+vis.start()
+
+Mpris.set_playlist()
+Mpris.play()
+
+# Album art
+for char in file_str:
+    if char != ' ':
+        time.sleep(0.005)
+    sys.stdout.write(char)
+    sys.stdout.flush()
+
+sys.stdout.write('\n')
+sys.stdout.flush()
+
+meta_header = f'''
+Now Playing
+Artist: {ARTIST}
+Album: {ALBUM}
+Title: '''
+
+for char in meta_header:
+    time.sleep(0.1)
+    sys.stdout.write(char)
+    sys.stdout.flush()
+
+metadata = ''
+while Mpris.state == 'Playing':
+    old_metadata = metadata
+    metadata = Mpris.metadata
+    if old_metadata != metadata:
+        for char in old_metadata:
+            sys.stdout.write('\b')
+            sys.stdout.flush()
+        for char in '                                         ':
+            sys.stdout.write(char)
+            sys.stdout.flush()
+        for char in '                                         ':
+            sys.stdout.write('\b')
+            sys.stdout.flush()
+
+        for char in metadata:
+            time.sleep(0.1)
+            sys.stdout.write(char)
+            sys.stdout.flush()
+    time.sleep(0.5)
+
+time.sleep(5)
+clear_screen()
+stop_vis()
+
+for char in halt_str:
+    time.sleep(0.01)
+    if char != '!':
+        sys.stdout.write(char)
+        sys.stdout.flush()
+
+while True:
+    try:
+        cmd = input(PROMPT)
+        if cmd.lower() == 'exit':
+            break
+    except KeyboardInterrupt:
+        exit()

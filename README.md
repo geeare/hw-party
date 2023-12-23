@@ -18,7 +18,7 @@ $ pip3 install -r requirements.txt
 
 In addition to the Python requirements, you will need an audio player 
 application which supports the MPRIS protocol. Finally, you can optionall 
-install the  the [cli-visualizer](dpayne/cli-visualizer) program to let it 
+install the  the [cli-visualizer](https://github.com/dpayne/cli-visualizer) program to let it 
 display the audio visual, however, this is not a hard requirement.
 
 
@@ -104,7 +104,7 @@ skip tracks forward or backward, the title will be updated to match.
 ### Matching the look of the release party video
 
 If you want to match the overall look of the release party video, you'll want to 
-install [cool-retro-term](Swordfish90/cool-retro-term). Open a second terminal 
+install [cool-retro-term](https://github.com/Swordfish90/cool-retro-term). Open a second terminal 
 window in the background and set it to full screen. Then, execute this command 
 to turn off the prompt (The prompt will be reset when you close the terminal):
 

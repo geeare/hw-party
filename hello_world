@@ -33,7 +33,7 @@ def show_vis(tty):
 with open(ART_DIR / 'ascii-cover-release.c') as ascii_file:
     file_list = ascii_file.readlines()
 
-with open(ART_DIR / 'init-release.txt') as loading_file:
+with open(ART_DIR / 'init.txt') as loading_file:
     load_list = loading_file.readlines()
 
 with open(ART_DIR / 'halt.txt') as halt_file:
